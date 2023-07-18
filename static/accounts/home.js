@@ -1,5 +1,8 @@
 
+
+
 function validateEmail(){
+	
 	
 	var emailInput = document.getElementById('email');
 	var emailError = document.getElementById('req-email');
@@ -53,6 +56,7 @@ function validatePassword2(){
 }
 
 function getdata(){
+	
 	var email=document.getElementById('email').value;
 	var username=document.getElementById('username').value;
 	var password=document.getElementById('password').value;
@@ -62,6 +66,17 @@ function getdata(){
 	var city=document.getElementById('city').value;
 	var state=document.getElementById('state').value;
 	var pincode=document.getElementById('pincode').value;
+	var csrfToken = document.getElementById('csrf-token').textContent
+	var csrfTokenElement = document.getElementById('csrf-token');
+	var csrfToken = csrfTokenElement.textContent; 
+
+	console.log(csrfToken)
+
+	console.log(email)
+	console.log(username)
+	console.log(password)
+	console.log(password2)
+	console.log(gender)
 
 	const email_required=document.getElementById('req-email')
 	const username_required=document.getElementById('username-required');
@@ -95,7 +110,7 @@ function getdata(){
 		pincode = "null";
 	  }
    
-	var csrfToken=`{{csrf_token}}`
+	
 
 	data={email:email,username:username,gender:gender,city:city,state:state,pincode:pincode,is_retailer:is_retailer,password:password,password2:password2}
 	 
@@ -103,7 +118,7 @@ function getdata(){
 	fetch(`http://127.0.0.1:8000/registration/`,{
 
 		method:"POST",
-		headers:{'X-CSRFToken':'{{csrf_token}}',"Content-Type":"application/json"},
+		headers:{'X-CSRFToken':csrfToken,"Content-Type":"application/json"},
 		body:JSON.stringify(data),
 		credential:'same-origin',
 		
@@ -113,18 +128,18 @@ function getdata(){
 		//return get_blog_post()
 	
 	}).then((data)=>{
-		//console.log(data)
+		console.log(data)
 		if (data.hasOwnProperty('message')){
+
 			var model_ele=document.getElementById('model-data');
-			var img = document.getElementById("image-id");
+			var img_bnd = document.getElementById("image-id");
 			var submit_tag=document.getElementById("submit-tag")
 			var okay_btn=document.getElementById("okay-btn")
 			var close_btn=document.getElementById("modal-close")
 			close_btn.style.display = "none";
-
-			okay_btn.href = "login/"; 
-			submit_tag.innerHTML="Form Submitted!";
-			img.src="static/vendors/images/success.png";
+			okay_btn.href = "/"; 
+			submit_tag.innerHTML="Thank You!";
+			img_bnd.src="//static//vendors//images//success.png//"
 			model_ele.innerHTML=data['message'];
 			$('#success-modal').modal('show');
 		}
@@ -141,8 +156,11 @@ function getdata(){
 				close_btn.style.display = "none";
 				model_ele=document.getElementById('model-data')
 				model_ele.innerHTML=data.regd_pass_errors
+				
 				$('#success-modal').modal('show'); 
+
 			}else{
+				
 				var element = document.getElementById("okay-btn");
 				element.style.display = "none";
 				model_ele=document.getElementById('model-data')

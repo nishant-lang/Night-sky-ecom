@@ -8,9 +8,9 @@
 	<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
 
 	<!-- Site favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="static/vendors/images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="static/vendors/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="static/vendors/images/favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/static/vendors/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/static/vendors/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/static/vendors/images/favicon-16x16.png">
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,10 +19,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="static/vendors/styles/core.css">
-	<link rel="stylesheet" type="text/css" href="static/vendors/styles/icon-font.min.css">
-	<link rel="stylesheet" type="text/css" href="static/src/plugins/jquery-steps/jquery.steps.css">
-	<link rel="stylesheet" type="text/css" href="static/vendors/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="/static/vendors/styles/core.css">
+	<link rel="stylesheet" type="text/css" href="/static/vendors/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/src/plugins/jquery-steps/jquery.steps.css">
+	<link rel="stylesheet" type="text/css" href="/static/vendors/styles/style.css">
 	<!-- this is for the jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -33,7 +33,7 @@
 
 <body>
     <!-- HEDER CODE  -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 ">
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 ">
         <a class="navbar-brand" href="#">Ecome</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -67,10 +67,10 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
-      </nav>
+      </nav> -->
     <!-- HEADER CODE END -->
 
-	<div class="register-page-wrap d-flex align-items-center justify-content-center flex-wrap bg-white mt-5">
+	<div class="register-page-wrap d-flex align-items-center justify-content-center flex-wrap  mt-5">
 		
 		<div class="container">
 			<div class="row justify-content-center ">
@@ -83,7 +83,7 @@
 								<h5>Basic Account Credentials</h5>
 								<section>
 									<div class="form-wrap max-width-600 mx-auto">
-										{% csrf_token %}
+										<!-- {% csrf_token %} -->
 										<div class="form-group row">
 											<label class="col-sm-4 col-form-label">Email Address<p class="text-danger" style="display: inline;">*</p></label>
 											<div class="col-sm-8">
@@ -203,7 +203,8 @@
 				<div class="modal-body text-center font-18">
 					<h3 class="mb-20" id="submit-tag">Sorry!</h3>
 					<div class="mb-30 text-center">
-						<img id="image-id" src="static/vendors/images/band.png" class="img-responsive" style="width: 50%; height: auto;">
+						<img id="image-id" src="/static/vendors/images/band.png" class="img-responsive" style="width: 50%; height: auto;">
+						
 					  </div>
 					<p id="model-data">...</p>
 				</div>
@@ -217,17 +218,213 @@
 			</div>
 		</div>
 	</div>  
+	<div id="csrf-token" style="display: none;" >{{ csrf_token }}</div>
 <!-- MODAL END-->
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-<script src="static/vendors/scripts/core.js"></script>
-<script src="static/vendors/scripts/script.min.js"></script>
-<script src="static/vendors/scripts/process.js"></script>
-<script src="static/vendors/scripts/layout-settings.js"></script>
-<script src="static/src/plugins/jquery-steps/jquery.steps.js"></script>
-<script src="static/vendors/scripts/steps-setting.js"></script>
-<script src="/static/accounts/home.js"></script>
+
+<script src="/static/vendors/scripts/core.js"></script>
+<script src="/static/vendors/scripts/script.min.js"></script>
+<script src="/static/vendors/scripts/process.js"></script>
+<script src="/static/vendors/scripts/layout-settings.js"></script>
+<script src="/static/src/plugins/jquery-steps/jquery.steps.js"></script>
+<script src="/static/vendors/scripts/steps-setting.js"></script>
+<!-- <script src="/static/accounts/home.js"></script> -->
+ 
+<script>
+	
+
+
+function validateEmail(){
+	
+	
+	var emailInput = document.getElementById('email');
+	var emailError = document.getElementById('req-email');
+	if (emailInput.value.trim() === '') {
+		emailError.innerHTML = 'This field is required.';
+		emailInput.focus();
+
+	}else{
+		emailError.innerHTML = '';
+	}
+}
+
+function validateUsername(){
+
+	var emailInput = document.getElementById('username');
+	var emailError = document.getElementById('username-required');
+
+	if (emailInput.value.trim() === '') {
+		emailError.innerHTML = 'This field is required.';
+		emailInput.focus();
+
+	}else{
+		emailError.innerHTML = '';
+	}
+}
+
+function validatePassword(){
+	var emailInput = document.getElementById('password');
+	var emailError = document.getElementById('pass-required');
+
+	if (emailInput.value.trim() === '') {
+		emailError.innerHTML = 'This field is required.';
+		emailInput.focus();
+	}else{
+		emailError.innerHTML = '';
+	}
+}
+
+function validatePassword2(){
+
+	var emailInput = document.getElementById('password2');
+	var emailError = document.getElementById('pass2-required');
+
+	if (emailInput.value.trim() === '') {
+		emailError.innerHTML = 'This field is required.';
+		emailInput.focus();
+
+	}else{
+		emailError.innerHTML = '';
+	}
+}
+
+function getdata(){
+	
+	var email=document.getElementById('email').value;
+	var username=document.getElementById('username').value;
+	var password=document.getElementById('password').value;
+	var password2=document.getElementById('password2').value;
+	var gender = document.querySelector('input[name="gender"]:checked').value;
+	var is_retailer = document.querySelector('input[name="retailer"]:checked').value;
+	var city=document.getElementById('city').value;
+	var state=document.getElementById('state').value;
+	var pincode=document.getElementById('pincode').value;
+	var csrfToken = document.getElementById('csrf-token').textContent
+	var csrfTokenElement = document.getElementById('csrf-token');
+	var csrfToken = csrfTokenElement.textContent; 
+
+	console.log(csrfToken)
+	console.log(email)
+	console.log(username)
+	console.log(password)
+	console.log(password2)
+	console.log(gender)
+
+	const email_required=document.getElementById('req-email')
+	const username_required=document.getElementById('username-required');
+	const pass_required=document.getElementById('pass-required')
+	const pass2_required=document.getElementById('pass2-required')
+	
+	if (email.trim()===''){
+		alert('You must Enter email')
+	}
+	if (username.trim()===''){
+		alert('You must Enter username')
+	}
+
+	if (password.trim()===''){
+		alert('You must Enter password')
+	}
+
+	if (password2.trim()===''){
+		alert('You must Enter Confirm password')
+	}
+
+	if (city.trim() === '') {
+		city = "null";
+	  }
+	  
+	if (state.trim() === '') {
+		state = "null";
+	  }
+	  
+	if (pincode.trim() === '') {
+		pincode = "null";
+	  }
+   
+	
+
+	data={email:email,username:username,gender:gender,city:city,state:state,pincode:pincode,is_retailer:is_retailer,password:password,password2:password2}
+	 
+
+	fetch(`http://127.0.0.1:8000/registration/`,{
+
+		method:"POST",
+		headers:{'X-CSRFToken':csrfToken,"Content-Type":"application/json"},
+		body:JSON.stringify(data),
+		credential:'same-origin',
+		
+	}).then(response => {
+		console.log(response.status)
+		return response.json()
+		//return get_blog_post()
+	
+	}).then((data)=>{
+		console.log(data)
+		if (data.hasOwnProperty('message')){
+
+			var model_ele=document.getElementById('model-data');
+			var img_bnd = document.getElementById("image-id");
+			var submit_tag=document.getElementById("submit-tag")
+			var okay_btn=document.getElementById("okay-btn")
+			var close_btn=document.getElementById("modal-close")
+			close_btn.style.display = "none";
+			okay_btn.href = "/"; 
+			submit_tag.innerHTML="Thank You!";
+			img_bnd.src="/static/vendors/images/success.png"
+			model_ele.innerHTML=data['message'];
+			$('#success-modal').modal('show');
+		}
+
+		if (data.hasOwnProperty('regd_pass_errors')){
+			//console.log(data.regd_pass_errors);
+			if (data.regd_pass_errors === "You are already registered.") {
+				var button = document.getElementById('cross-button');
+				button.style.display = 'block';
+				var okay_btn=document.getElementById("okay-btn")
+				okay_btn.href = "/";
+				okay_btn.innerHTML="Login"
+				var close_btn=document.getElementById("modal-close")
+				close_btn.style.display = "none";
+				model_ele=document.getElementById('model-data')
+				model_ele.innerHTML=data.regd_pass_errors
+				
+				$('#success-modal').modal('show'); 
+
+			}else{
+				
+				var element = document.getElementById("okay-btn");
+				element.style.display = "none";
+				model_ele=document.getElementById('model-data')
+				model_ele.innerHTML=data.regd_pass_errors
+				$('#success-modal').modal('show');
+			}
+		} 
+		
+		if (data.hasOwnProperty('email')) {
+			console.log(data.email[0])
+			email_required.innerHTML = data.email[0]	
+		} 
+
+		if (data.hasOwnProperty('username')){
+			username_required.innerHTML = data.username[0]
+		}
+
+		if (data.hasOwnProperty('password')){
+			pass_required.innerHTML = data.password[0]
+		}
+
+		if (data.hasOwnProperty('password2')){
+			pass2_required.innerHTML = data.password2[0]
+		}
+	})
+	}
+
+
+</script>
+
 </body>
 </html>
 

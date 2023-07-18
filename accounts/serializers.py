@@ -47,4 +47,15 @@ class RegistrationsSerializers(serializers.Serializer):
             
             return user
         
-        
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=150)
+    password = serializers.CharField(max_length=128, write_only=True)
+
+    def validate(self, data):
+        email = data.get('email')
+        password = data.get('password')
+
+        if email and password:
+            return data
+        else:
+            raise serializers.ValidationError("Both email and password are required.")
