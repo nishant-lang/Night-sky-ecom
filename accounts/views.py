@@ -64,8 +64,16 @@ def User_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+        
+        if not email:
+            messages.error(request, 'You must Enter email.')
+            return redirect('/')
 
-        if email and password:  # Check if the fields are not empty
+        if not password:
+            messages.error(request, 'You must Enter Password.')
+            return redirect('/')
+
+        if email and password: 
             user = authenticate(request, email=email, password=password)
 
             if user is not None:
@@ -74,9 +82,6 @@ def User_login(request):
                 return redirect('/retail/')
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')
-
-        # If email or password is missing or authentication fails, display the form with the error message
-        # return render(request, 'accounts/login.html', {'email': email, 'password': password})
         return redirect('/')
 
     else:

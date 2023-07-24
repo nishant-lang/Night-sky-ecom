@@ -241,6 +241,7 @@ function validateEmail(){
 	
 	var emailInput = document.getElementById('email');
 	var emailError = document.getElementById('req-email');
+	
 	if (emailInput.value.trim() === '') {
 		emailError.innerHTML = 'This field is required.';
 		emailInput.focus();
