@@ -87,10 +87,14 @@
         {% for message in messages %}
 		{% if message.message == "You must Enter email." %}
                 <p class="text-danger ml-1 mb-0" style="display: inline;" id="email-message">{{ message }}</p>
+				
             {% endif %}
         {% endfor %}
     </ul>
 {% endif %}
+
+<p class="text-danger ml-1 mb-0" style="display:inline none;" id="email-error"></p>
+
 
 
 <div class="input-group custom mb-0 mt-4">
@@ -105,10 +109,11 @@
         {% for message in messages %}
 		{% if message.message == "You must Enter Password." %}
                 <p class="text-danger ml-1 mb-0" style="display: inline;" id="pass-message">{{ message }}</p>
-            {% endif %}
-        {% endfor %}
-    </ul>
-{% endif %}
+				{% endif %}
+				{% endfor %}
+			</ul>
+			{% endif %}
+	<p class="text-danger ml-1 mb-0 " style="display:inline none;" id="pass-error"></p>
 	
 
 <div class="row pb-30 mt-2">
@@ -204,18 +209,31 @@ function logindata(){
 function validate_email(){
 	var email=document.getElementById('email');
 	var email_message=document.getElementById('email-message');
+	var email_error=document.getElementById('email-error');
+
+    if (email.value.trim() === '') {
+		email_error.style.display='block'
+		email_error.innerHTML = 'This field is required.';
+		emailInput.focus();
+	}
 	if (email.value.trim() !== ''){
-		
 		email_message.style.display="none";
 	}
 }
-
 
 function validate_password(){
 	var email=document.getElementById('email');
 	var password=document.getElementById('password');
 	var pass_message=document.getElementById('pass-message')
+	var pass_error=document.getElementById('pass-error')
     const savedEmail = localStorage.getItem('user_email');
+	if (password.value.trim() === '') {
+		pass_error.style.display='block'
+		pass_error.innerHTML = 'This field is required.';
+		emailInput.focus();
+	}
+
+	
 	
 	if (savedEmail){
 		email.value=savedEmail
@@ -227,6 +245,5 @@ function validate_password(){
 }
 
 </script>
-
 </body>
 </html> 
