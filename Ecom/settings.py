@@ -146,8 +146,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # BELOW LINE IS FOR THE COUSTOM USER
 AUTH_USER_MODEL='accounts.User'
 
+# email config
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER=os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_PASS')
+EMAIL_USE_TLS=True
+
+
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -155,3 +165,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+PASSWORD_RESET_TIMEOUT=900  #900 Sec=15 Min.

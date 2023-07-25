@@ -2,14 +2,14 @@ from django.shortcuts import render
 from accounts.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from accounts.serializers import RegistrationsSerializers,UserLoginSerializer
+from accounts.serializers import RegistrationsSerializers,UserLoginSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
 from django.middleware.csrf import get_token
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from accounts.serializers import UserLoginSerializer
 from django.contrib import messages
 from django.contrib.auth import logout
+from rest_framework import status
 
 def AccountHome(request):
     csrf_token = get_token(request)
@@ -93,3 +93,23 @@ def User_login(request):
 def UserLogout(request):
     logout(request)
     return redirect('/')
+
+
+
+class SendPasswordResetEmailView(APIView):
+    def post(self,request,format=None):
+        serializer=SendPasswordResetEmailSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            return Response({'msg':'Password Reset link sent.Pease check your Email.'},status.HTTP_200_OK)
+      
+        return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
+    
+class UserPasswordResetView(APIView):
+    
+    def post(self,request,uid,token,format=None):
+        serializer=UserPasswordResetSerializer(data=request.data,context={'uid':uid,'token':token})
+
+        if serializer.is_valid(raise_exception=True):
+            return Response({'Msg':'Password Reset Successfully'},status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
