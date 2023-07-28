@@ -29,6 +29,8 @@ def AccountLogin(request):
     return render(request,"accounts/login.html",context)
 
 
+
+
 # Create your views here.
 class UserRegistrations(APIView):
 
@@ -61,10 +63,13 @@ class UserRegistrations(APIView):
 
 
 def User_login(request):
+
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
+        print(email)
+        print(password)
+       
         if not email:
             messages.error(request, 'You must Enter email.')
             return redirect('/')
@@ -74,11 +79,13 @@ def User_login(request):
             return redirect('/')
 
         if email and password: 
+            # print('helllooo')
             user = authenticate(request, email=email, password=password)
-
+            # print(user)
             if user is not None:
                 login(request, user)
                 messages.success(request, 'You have been logged in successfully!')
+                
                 return redirect('/retail/')
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')
@@ -94,19 +101,28 @@ def UserLogout(request):
     logout(request)
     return redirect('/')
 
+def Forgot_password_email(request):
+    return render(request,'accounts/forgot-password.html')
+
+def Password_reset(request,uid,token):
+    print('user uid: ',uid)
+    print('user token: ',token)
+    return render(request,'accounts/resetpass.html')
 
 
 class SendPasswordResetEmailView(APIView):
+
     def post(self,request,format=None):
         serializer=SendPasswordResetEmailSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
             return Response({'msg':'Password Reset link sent.Pease check your Email.'},status.HTTP_200_OK)
-      
-        return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
+        if 'non_field_errors' in serializer.errors:
+            return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
     
+
 class UserPasswordResetView(APIView):
-    
+
     def post(self,request,uid,token,format=None):
         serializer=UserPasswordResetSerializer(data=request.data,context={'uid':uid,'token':token})
 

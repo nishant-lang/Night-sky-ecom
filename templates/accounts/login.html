@@ -51,29 +51,38 @@
 		</div>
 	</div>
 
-<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
-	<div class="container">
-	    <div class="row align-items-center">
-		    <div class="col-md-8 col-lg-7">
-			    <img src="\static\src\images\eCommerce-Cartoon.png" alt="">
-		    </div> 
 
-<div class="col-md-6 col-lg-5">
-
-    <!-- For message -->
-    <!-- <div class="alert alert-warning alert-dismissible fade show col-ml-4" role="alert">
-		You should check in on some of those fields below.
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		  <span aria-hidden="true">&times;</span>
-		</button>
-	  </div> -->
-
-	<div class="login-box bg-white box-shadow border-radius-10">
-		<div class="login-title">
-			<h2 class="text-center text-primary">Login To DeskApp</h2>
-		</div>
    
-	<form action="userlogin/" method="post" >
+		<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-md-8 col-lg-7">
+						<img src="\static\src\images\eCommerce-Cartoon.png" alt="">
+					</div> 
+		
+		<div class="col-md-6 col-lg-5">
+		
+			<!-- For message -->
+			<!-- <div class="alert alert-warning alert-dismissible fade show col-ml-4" role="alert">
+				You should check in on some of those fields below.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div> -->
+		
+			  <!-- FROM HERE YOU TO HANDEL THE ERROR MSG -->
+			<div class="login-box bg-white box-shadow border-radius-10">
+				<!-- This is a danger alert—check it out! -->
+				{% for message in messages %}
+				<p class="alert alert-danger" role="alert">
+					{{message}}
+				</p>
+				{% endfor %}
+				<div class="login-title">
+					<h2 class="text-center text-primary">Login To DeskApp</h2>
+			 	</div>
+		   
+	<form action="userlogin/" method="post">
 		{% csrf_token %}
 	<div class="input-group custom mb-0 ">
 	<input type="text" id="email" oninput="validate_email()" class="form-control form-control-lg mb-0" placeholder="Enter your email" value="" name="email" >
@@ -124,7 +133,7 @@
 		</div>
 	</div>
 	<div class="col-6">
-		<div class="forgot-password"><a href="forgot-password.html">Forgot Password</a></div>
+		<div class="forgot-password"><a href="/forgot-password/">Forgot Password</a></div>
 	</div>
 </div>
 <div class="row">
@@ -200,13 +209,14 @@ const savedEmail = localStorage.getItem('email');
  }  */}
 
 
-
+ var error_msg=document.getElementById('error-msg').value
 
 function logindata(){
 	localStorage.setItem('user_email', email.value.trim());
  }
 
 function validate_email(){
+
 	var email=document.getElementById('email');
 	var email_message=document.getElementById('email-message');
 	var email_error=document.getElementById('email-error');
@@ -214,27 +224,29 @@ function validate_email(){
     if (email.value.trim() === '') {
 		email_error.style.display='block'
 		email_error.innerHTML = 'This field is required.';
-		emailInput.focus();
-	}
-	if (email.value.trim() !== ''){
-		email_message.style.display="none";
+		email_error.focus();
+	}else{
+		//email_message.style.display="none";
+		email_error.innerHTML = ''
 	}
 }
 
 function validate_password(){
+
 	var email=document.getElementById('email');
 	var password=document.getElementById('password');
 	var pass_message=document.getElementById('pass-message')
 	var pass_error=document.getElementById('pass-error')
     const savedEmail = localStorage.getItem('user_email');
+
 	if (password.value.trim() === '') {
 		pass_error.style.display='block'
 		pass_error.innerHTML = 'This field is required.';
-		emailInput.focus();
+		pass_error.focus();
+	}else{
+		pass_error.innerHTML = ''
 	}
 
-	
-	
 	if (savedEmail){
 		email.value=savedEmail
 	}  
@@ -244,6 +256,11 @@ function validate_password(){
 	}
 }
 
+
+
+
+
 </script>
+
 </body>
 </html> 

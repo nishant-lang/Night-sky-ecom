@@ -266,6 +266,7 @@ function validateUsername(){
 }
 
 function validatePassword(){
+	
 	var emailInput = document.getElementById('password');
 	var emailError = document.getElementById('pass-required');
 
@@ -297,8 +298,23 @@ function getdata(){
 	var username=document.getElementById('username').value;
 	var password=document.getElementById('password').value;
 	var password2=document.getElementById('password2').value;
-	var gender = document.querySelector('input[name="gender"]:checked').value;
-	var is_retailer = document.querySelector('input[name="retailer"]:checked').value;
+
+	// var genderElement = document.querySelector('input[name="gender"]:checked').value;
+	// var isRetailerElement = document.querySelector('input[name="retailer"]:checked').value; 
+
+	// var gender = genderElement ? genderElement.value : "non";
+	// var is_retailer = isRetailerElement ? isRetailerElement.value : "non";
+    
+
+	var genderElement = document.querySelector('input[name="gender"]:checked');
+	var isRetailerElement = document.querySelector('input[name="retailer"]:checked');
+
+	var gender = genderElement ? genderElement.value : "non";
+	var is_retailer = isRetailerElement ? isRetailerElement.value : false;
+
+	console.log(gender)
+	console.log(is_retailer)
+
 	var city=document.getElementById('city').value;
 	var state=document.getElementById('state').value;
 	var pincode=document.getElementById('pincode').value;
@@ -318,6 +334,8 @@ function getdata(){
 	const pass_required=document.getElementById('pass-required')
 	const pass2_required=document.getElementById('pass2-required')
 	
+
+
 	if (email.trim()===''){
 		alert('You must Enter email')
 	}
@@ -347,7 +365,17 @@ function getdata(){
    
 	
 
-	data={email:email,username:username,gender:gender,city:city,state:state,pincode:pincode,is_retailer:is_retailer,password:password,password2:password2}
+	data={
+		email:email,
+		username:username,
+		gender:gender,
+		city:city,
+		state:state,
+		pincode:pincode,
+		is_retailer:is_retailer,
+		password:password,
+		password2:password2
+	}
 	 
 
 	fetch(`http://127.0.0.1:8000/registration/`,{
