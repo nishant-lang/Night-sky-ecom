@@ -73,11 +73,12 @@
 			  <!-- FROM HERE YOU TO HANDEL THE ERROR MSG -->
 			<div class="login-box bg-white box-shadow border-radius-10">
 				<!-- This is a danger alert—check it out! -->
-				{% for message in messages %}
-				<p class="alert alert-danger" role="alert">
-					{{message}}
-				</p>
-				{% endfor %}
+			{% for message in messages %}
+				{% if message.message != "You must Enter Password." and message.message != "You must Enter email." %}
+				<p class="alert alert-danger" role="alert">{{message}}</p>
+			 	{% endif %}
+			{% endfor %}
+
 				<div class="login-title">
 					<h2 class="text-center text-primary">Login To DeskApp</h2>
 			 	</div>
@@ -209,7 +210,7 @@ const savedEmail = localStorage.getItem('email');
  }  */}
 
 
- var error_msg=document.getElementById('error-msg').value
+var error_msg=document.getElementById('error-msg').value
 
 function logindata(){
 	localStorage.setItem('user_email', email.value.trim());
@@ -243,6 +244,7 @@ function validate_password(){
 		pass_error.style.display='block'
 		pass_error.innerHTML = 'This field is required.';
 		pass_error.focus();
+
 	}else{
 		pass_error.innerHTML = ''
 	}

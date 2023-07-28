@@ -102,7 +102,11 @@ def UserLogout(request):
     return redirect('/')
 
 def Forgot_password_email(request):
-    return render(request,'accounts/forgot-password.html')
+    csrf_token = get_token(request)
+    context = {
+        'csrf_token': csrf_token,
+    }
+    return render(request,'accounts/forgot-password.html',context)
 
 def Password_reset(request,uid,token):
     print('user uid: ',uid)
@@ -111,6 +115,7 @@ def Password_reset(request,uid,token):
 
 
 class SendPasswordResetEmailView(APIView):
+    print('this api hits')
 
     def post(self,request,format=None):
         serializer=SendPasswordResetEmailSerializer(data=request.data)

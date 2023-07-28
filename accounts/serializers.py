@@ -77,12 +77,12 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
         if User.objects.filter(email=email).exists():
             user=User.objects.get(email=email)
             uid=urlsafe_base64_encode(force_bytes(user.id))
-            # print('Encoded Uid',uid)
+            print('Encoded Uid',uid)
             token=PasswordResetTokenGenerator().make_token(user)
-            # print('password Reset Token',token)
+            print('password Reset Token',token)
             link='http://127.0.0.1:8000/reset-link-page/'+uid+'/'+token
 
-            # print('password Reset link',link)
+            print('password Reset link',link)
             
             body='Click Following Link to Reset Your password:' +link
 
@@ -94,7 +94,7 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
             Util.send_email(data)
             return attrs
         else:
-            raise ValidationError('You are not a Registerd User')
+            raise ValidationError('You do not have a registered user account.')
         
 
 
@@ -114,7 +114,7 @@ class UserPasswordResetSerializer(serializers.Serializer):
             token=self.context.get('token')
 
             if password!=password2:
-                raise serializers.ValidationError("Password and Confirm Password doesn't match")
+                raise serializers.ValidationError("The Password and Confirm Password do not match.")
             id=smart_str(urlsafe_base64_decode(uid))
             user=User.objects.get(id=id)
             if not PasswordResetTokenGenerator().check_token(user,token):
