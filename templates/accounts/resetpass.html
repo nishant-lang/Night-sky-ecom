@@ -4,8 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 <body>
-    <h1>This is the reset link page</h1>
+    
+      <div style="display: flex; justify-content: center; align-items: center; height: 75vh;">
+        
+          <div>
+            <div class="alert alert-success" id="alert-msg" role="alert" style="display: none;">
+                A simple success alert—check it out!
+              </div>
+              
+              <div class="alert alert-danger" role="alert" id="alert-red" style="display: none;">
+                This is a danger alert—check it out!
+              </div>
+
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <h3>Please Enter Password and confirm password To Reset Your password.</h3><br>
+              </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" id="pass-lable" class="form-label">Password</label><br>
+            <input type="password" class="form-control" id="password" oninput="validate_password()"  aria-describedby="emailHelp" style="max-width: 400px;">
+            
+            <p class="text-danger ml-1 mb-0 " style="display:inline none;" id="pass-error"></p>
+            
+
+            <label for="exampleInputEmail1" id="confirm-pass-lable" class="form-label">Confirm Password</label><br>
+            <input type="password" class="form-control" id="conf-pass" oninput="validate_conf_pass()"  aria-describedby="emailHelp" style="max-width: 400px;">
+            <!-- you have to also work here -->
+            <p class="text-danger ml-1 mb-0 " style="display:inline none;" id="cnf-pass-error"></p>
+            
+          </div>
+          <button type="submit" class="btn btn-primary" id="submit_btn" onclick="reset_password()" >Submit</button>
+          </div>
+      </div>
+    <!-- ESSENCIAL CREDENCIALS OR HIDEN VALUE -->
+    <div id="csrf-token" style="display: none;" >{{ csrf_token }}</div> 
+    <div id="uid"  style="display: none;">{{uid}}</div> 
+    <div id="user-token" style="display: none;">{{token}}</div> 
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+    <!-- JQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function validate_password(){
+            var password=document.getElementById('password');
+            var pass_error=document.getElementById('pass-error');
+        
+            if (password.value.trim() === '') {
+              pass_error.className = 'text-danger';
+              pass_error.style.display='block'
+              pass_error.innerHTML = 'This field is required.';
+             
+            }
+        } 
+
+        function validate_conf_pass(){
+
+            var cnf_password=document.getElementById('conf-pass');
+            var pass_error=document.getElementById('cnf-pass-error');
+
+            if (cnf_password.value.trim() === '') {
+              pass_error.className = 'text-danger';
+              pass_error.style.display='block'
+              pass_error.innerHTML = 'This field is required.';
+
+            }
+        } 
+
+    </script>
+
+<!-- Your JavaScript code -->
+<script>
+
+  function reset_password(){
+    const csrfToken = document.getElementById('csrf-token').innerText;
+    const uid = document.getElementById('uid').innerText;
+    const user_token = document.getElementById('user-token').innerText;
+    const password=document.getElementById('password').value;
+    const password2=document.getElementById('conf-pass').value;
+    
+    //console.log(csrfToken)
+    //console.log(uid)
+    //console.log(user_token)
+    //console.log(password)
+    //console.log(password2)
+
+    var alert_red=document.getElementById('alert-red')
+    var alert_msg=document.getElementById('alert-msg')
+
+    // URL of the API
+   const apiUrl = "http://127.0.0.1:8000/reset-password/" + uid + "/" + user_token + "/";
+   
+    // Data to be sent in the POST request (modify as per your requirements)
+
+    const data = {
+        'password':password,
+        'password2':password2,
+    };
+   
+    console.log(data)
+
+    // Make the Ajax POST request
+    $.ajax({
+      url: apiUrl,
+      type: "POST",
+      data: JSON.stringify(data),
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("X-CSRFToken",  csrfToken);
+      },
+
+      success: function(data) {
+        console.log(data['Msg'])
+
+        //Handled the response data here
+        alert_red.style.display='none'
+        alert_msg.style.display='block'
+        alert_msg.innerHTML=data['Msg']
+        submit_btn.disabled = true;
+        setTimeout(redirectToPage,1800); 
+       
+      },
+      error: function(xhr, status, error) {
+        // Handle any errors that occurred during the request
+
+        //console.log(error)
+        //console.log(status)
+        //console.log(xhr.responseJSON['non_field_errors'][0])
+
+        alert_msg.style.display='none'
+        alert_red.style.display='block'
+        alert_red.innerHTML=xhr.responseJSON['non_field_errors'][0]
+      }
+    }); 
+}
+
+function redirectToPage() {
+    // Replace 'destination_page.html' with the actual URL of the destination page
+    window.location.href = '/userlogin/';
+  }
+</script>
 </body>
 </html>
