@@ -9,7 +9,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 def Retailhome(request):
     obj=Product.objects.all()
-    return render(request,'retail/dashbord.html',{'obj':obj})
+    return render(request,'retail/home.html',{'obj':obj})
 
 
 # API FOR ADD THE PRODUCT

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from accounts.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from accounts.serializers import RegistrationsSerializers,UserLoginSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
+from accounts.serializers import RegistrationsSerializers,SendPasswordResetEmailSerializer,UserPasswordResetSerializer,UserLoginSerializer
 from django.middleware.csrf import get_token
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
@@ -67,8 +67,8 @@ def User_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print(email)
-        print(password)
+        # print(email)
+        # print(password)
        
         if not email:
             messages.error(request, 'You must Enter email.')
@@ -83,16 +83,21 @@ def User_login(request):
             user = authenticate(request, email=email, password=password)
             # print(user)
             if user is not None:
+
+                context={
+                    'user':user
+                }
                 login(request, user)
-                messages.success(request, 'You have been logged in successfully!')
-                
-                return redirect('/retail/')
+                messages.success(request, 'You have been logged in successfully.')
+                # print(request.user)
+                return redirect('/retail/',context)
+            
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')
         return redirect('/')
-
+    
     else:
-        # return render(request, 'accounts/login.html')
+        # return render(request,'accounts/login.html')
         return redirect('/')
 
 
@@ -100,6 +105,7 @@ def User_login(request):
 def UserLogout(request):
     logout(request)
     return redirect('/')
+   
 
 def Forgot_password_email(request):
     csrf_token = get_token(request)
