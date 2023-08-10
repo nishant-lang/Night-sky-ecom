@@ -80,24 +80,27 @@ def User_login(request):
 
         if email and password: 
             # print('helllooo')
-            user = authenticate(request, email=email, password=password)
+            user = authenticate(request, email=email.lower(), password=password)
             # print(user)
             if user is not None:
-
-                context={
-                    'user':user
-                }
-                login(request, user)
-                messages.success(request, 'You have been logged in successfully.')
-                # print(request.user)
-                return redirect('/retail/',context)
-            
+                if user.is_retailer:
+                    context={
+                        'user':user
+                    }
+                    login(request, user)
+                    messages.success(request, 'You have been logged in successfully.')
+                    return redirect('/retail/',context)
+                else:
+                    context={
+                        'user':user
+                    }
+                    login(request, user)
+                    messages.success(request, 'You have been logged in successfully.')
+                    return redirect('/bayer/',context)
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')
         return redirect('/')
-    
     else:
-        # return render(request,'accounts/login.html')
         return redirect('/')
 
 

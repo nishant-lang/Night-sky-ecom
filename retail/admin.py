@@ -1,13 +1,23 @@
 from django.contrib import admin
 from retail.models import Product,ProductCatogory
-
 # Register your models here.
 
+   
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category', 'user', 'price', 'desc','last_updated_by','last_updated_at' ,'datetime')
+    list_filter = ('category', 'user')
+    search_fields = ('name', 'desc')
+    list_per_page = 20
 
-@admin.register(ProductCatogory)
-class AdminUser(admin.ModelAdmin):
-    list_display = ('id','category')
+    def save_model(self, request, obj):
+       
+        obj.last_updated_by = request.user
+        obj.save()
 
-@admin.register(Product)
-class AdminUser(admin.ModelAdmin):
-    list_display = ('id','category','product_pic','name','price','desc','datetime')
+admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductCatogory)
+
+
+    
+
+

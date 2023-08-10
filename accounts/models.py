@@ -21,9 +21,10 @@ class UserProfileManager(BaseUserManager):
 
     def create_superuser(self,username,email,password=None):
         """Create a new super user super user"""
+        
         if not email:
             raise ValueError('User must have the email')
-        
+
         email=self.normalize_email(email)
         user=self.model(email=email.lower(),username=username)
         user.set_password(password)

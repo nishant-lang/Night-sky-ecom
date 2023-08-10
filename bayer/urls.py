@@ -4,5 +4,5 @@ from bayer import views
 
 urlpatterns = [
   
-    
+    path('', views.BayerHome,name='bayerhome'),
 ]
