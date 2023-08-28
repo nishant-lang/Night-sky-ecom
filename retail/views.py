@@ -1,36 +1,55 @@
 from django.shortcuts import render
 from retail.models import Product,ProductCatogory
 from rest_framework.views import APIView
-from retail.serializers import AddProductSerializer
+from retail.serializers import AddProductSerializer,ProductSerializer
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
-
+from django.middleware.csrf import get_token
 # Create your views here.
 
 def Retailhome(request):
-    # obj=Product.objects.all()
+    # objs=ProductCatogory.objects.all()
+    objs = ProductCatogory.objects.all()
     user=request.user
-    objs=ProductCatogory.objects.all()
-    products=Product.objects.filter(user=user)
-    print(products)
+    csrftoken = get_token(request)
+    # print(csrftoken)
+    products=Product.objects.filter(user=user).order_by('-id')
+    # print(products)
 
-    return render(request,'retail/home.html',{'objs':objs,'products':products})
+    context={
+       'products':products,
+       'csrftoken':csrftoken,
+       'objs':objs
+    }
+    return render(request,'retail/home.html',context) #'objs':objs,
 
 
 # API FOR ADD THE PRODUCT
 
 class AddProduct(APIView):
     parser_classes = (MultiPartParser, FormParser)
-    
     def post(self,request):
+
         context={
             'user':request.user
         }
+
         serializer=AddProductSerializer(data=request.data,context=context)
+        
         if serializer.is_valid():
             user = serializer.save()
-            print(user)
-            return Response({"message": "Your Product has been Added"})
+            # print(user)
+            return Response({"message":"Your Product has been Added"})
         else:
             return Response(serializer.errors, status=400)
+    
+
+class FiltersProducts(APIView):
+
+    def get(self,request,category_id):
+        related_products = Product.objects.filter(category_id=category_id)
+        serializer = ProductSerializer(related_products, many=True)
+        return Response(serializer.data)
         
+
+

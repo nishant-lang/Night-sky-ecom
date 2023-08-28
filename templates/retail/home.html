@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
    
 </head>
-<body style="background-color: rgb(240, 255, 251);position:fixed;" >
+<body style="background-color: rgb(240, 255, 251);" >
  
     <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 " style="font-family: Trirong, serif;">
         <a class="navbar-brand" href="#">Ecom</a>
@@ -62,56 +62,77 @@
           </div>
       </nav>
 
-  <p style="font-family: Trirong, serif; font: size 15px; display: flex; justify-content: flex-end ; position:relative; top:6px; " class="mt-5 mr-1">Current Indian Time: <span id="indianTime"></span></p>
+  <p style="font-family: Trirong, serif; font: size 15px; display: flex; justify-content: flex-end; position:relative; top:6px;" class="mt-5 mr-1">Current Indian Time: <span id="indianTime"></span></p>
 
 {% if  user.is_retailer %}
-<!-- Add Modaal for the addd product form -->
-<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+<!-- Add Modaal for the add product form -->
+<div class="modal fade mt-5" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addProductModalLabel" style="font-family: Trirong, serif">Add Product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" onclick="Cleardata()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" style="font-family: Trirong, serif">
-        <form>
+
+      <!-- <div class="alert alert-danger alert-dismissible fade show mx-1 my-1" id="alertbtn" style="display: none;" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span  aria-hidden="true">&times;</span>
+        </button>
+      </div>  -->
+      
+      <div class="alert alert-danger alert-dismissible fade show mx-1 my-1" id="alertbtn" style="display: none;" role="alert">
+
+        <span id="alertMessage"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" onclick="Cleardata()" >&times;</span>
+        </button>
+      </div>
+      
+      
+      <div class="modal-body" style="font-family: Trirong, serif ">
+        <div class="form-group">
+          <label for="productPicture">Product Picture:</label>
+          <input type="file" class="form-control" id="picture" name="productpicture" accept="image/*" required>
+        </div>
+
           <div class="form-group">
             <label for="productName">Prduct Name:</label>
-            <input type="text" class="form-control" id="productName" name="productName" required>
+            <input type="text" class="form-control" id="name" name="productname" required>
           </div>
           <div class="form-group">
             <label for="productCategory">Category:</label>
-            <select class="form-control" id="productCategory" name="productCategory" required>
+            
+            <select class="form-control" id="category" name="productCategory" required>
               <option value="">Select Category</option>
+
               {%for obj in objs%}
-              <option value="cat_{{ obj.id }}">{{obj.category}}</option>
+              <option value="{{ obj.id }}">{{obj.category}}</option>
               {%endfor%}
             </select>
+
           </div>
-         
           <div class="form-group">
             <label for="productPrice">Price:</label>
-            <input type="number" step="0.01" class="form-control" id="productPrice" name="productPrice" required>
+            <input type="number" step="0.01" class="form-control" id="price" name="productPrice" required>
           </div>
+          
           <div class="form-group">
             <label for="productDescription">Description:</label>
-            <textarea class="form-control" id="productDescription" name="productDescription" required></textarea>
+            <textarea class="form-control" id="description" name="productdescription" required></textarea>
           </div>
-          <div class="form-group">
-            <label for="productDateTime">Date and Time:</label>
-            <input type="datetime-local" class="form-control" id="productDateTime" name="productDateTime" required>
+          <!-- <button type="submit"  onclick="AddProduct()"  class="btn btn-primary d-flex ">Add Product</button> -->
+          <div class="text-center">
+            <button type="submit" onclick="AddProduct()" class="btn btn-primary">Add Product</button>
           </div>
-          <button type="submit" class="btn btn-primary">Add Product</button>
-        </form>
       </div>
     </div>
   </div>
 </div>
-<!-- madal end -->
+<!-- MODAL END -->
 <!-- left side blackbox -->
-<div style="background-color: rgb(37, 34, 34); color: white; padding: 20px; position: absolute; left: 0; top: 0; height: 100vh; width: 250px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; border: 2px solid white; border-radius: 10px; overflow: hidden; " class="mt-5">
+<div style="background-color: rgb(13, 12, 13); color: white; padding: 20px; position: absolute; left:0; top: 0; height: 93.5vh; width: 250px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; border: 2px solid white; border-radius: 10px; overflow: hidden;" class="my-5">
   <div style="overflow-y: auto;">
       <h5 style="color: rgba(232, 235, 240, 0.557); font-family: Trirong, serif;">Add Product...</h5>
       <button type="button" class="btn ml-2 my-0" data-toggle="modal" data-target="#addProductModal" style="color: rgba(14, 207, 237, 0.792);">
@@ -125,8 +146,8 @@
 </div>
 <!-- Blackbox code End -->
 <!-- code  start for filter product -->
-<div class=" col-8" style="position:relative;left:250px ;font-family: Trirong">
-      <h5 style="color: rgb(18, 17, 18);font-family: Trirong, serif; font-size: 18px;">Filter your product</h5>
+<div class="ml-3" style="position:relative;left:250px ;font-family: Trirong ;width: 80vh;">
+      <h5 style="color: rgb(61, 59, 61);font-family: Trirong, serif; font-size: 18px;">Filter your product</h5>
       <div class="input-group mb-2">
         <select class="custom-select" id="productFilter">
           <option value="">Select Category</option>
@@ -141,7 +162,6 @@
           </div>
       </div>
   </div>
-</div>
 <!-- code end for filter -->
 
 <!-- PRODUCT CARDS ARE HERE -->
@@ -152,7 +172,7 @@
         <div class="card shadow my-2">
           <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/media/{{ item.product_pic }}" alt="Image" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
           <div class="card-body">
-            <p class="card-text" style="font-family: Trirong, serif">{{ item.desc }}</p>
+            <p class="card-text" style="font-family: Trirong, serif">{{ item.desc|slice:":40" }}</p>
             <p class="card-text mt-0 " style="font-family: Trirong, serif"><b>Price: &#8377;</b>{{ item.price }}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
@@ -172,17 +192,20 @@
     {% endfor %}
   </div>
 </div>
+
+
 {% endif %}
 
 <!-- Add Bootstrap JS and jQuery scripts here -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script> 
 </body>
 </html>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script> 
 
  <script>
+
   function updateClock() {
     const now = new Date();
     const options = { timeZone: 'Asia/Kolkata', hour12: true };
@@ -192,6 +215,113 @@
   // Update the clock every second
   setInterval(updateClock, 1000);
   </script>
+
+  <script>
+
+
+    function Cleardata(){
+
+      const product_name=document.getElementById('name')
+      const product_description=document.getElementById('description')
+      const product_price=document.getElementById('price')
+      const selectelement=document.getElementById('category')
+      const selectedOption = selectelement.options[selectelement.selectedIndex];
+      const categoryId = selectedOption.value;
+      const fileInputElement = document.getElementById("picture");
+      const selectedFile = fileInputElement.files[0];
+
+      product_name.value = '';
+      product_description.value = '';
+      product_price.value = '';
+      selectelement.selectedIndex = 0;  // Reset the selected index to the default option
+      fileInputElement.value = null; 
+      setTimeout(() => {
+        location.reload();
+    }, 2000);
+
+    }
+
+    function AddProduct(){
+      
+      const csrftoken='{{csrftoken}}'
+      const user='{{user.email}}'
+      const product_name=document.getElementById('name').value;
+      const product_description=document.getElementById('description').value;
+      const product_price=document.getElementById('price').value;
+      const selectelement=document.getElementById('category')
+      const selectedOption = selectelement.options[selectelement.selectedIndex];
+      const categoryId = selectedOption.value;
+      const fileInputElement = document.getElementById("picture");
+      const selectedFile = fileInputElement.files[0];  
+      const formData = new FormData();
+   
+   
+      //  console.log(selectedFile)
+      //  console.log(product_name)
+      //  console.log(product_price)
+      //  console.log(product_description)
+      //  console.log(categoryId)
+      //  console.log(user)
+
+
+      formData.append('product_pic', selectedFile);
+      formData.append('name', product_name);
+      formData.append('desc', product_description);
+      formData.append('price', product_price);
+      formData.append('category', categoryId);
+      formData.append('user', user);
+
+
+fetch(`http://127.0.0.1:8000/retail/addproduct/`,{
+
+       method:"POST",
+       headers:{'X-CSRFToken':csrftoken,},
+       body:formData,
+       credential:'same-origin',
+      
+     }).then(response => {
+       console.log(response.status)
+       return response.json()
+       //return get_blog_post()
+    
+     }).then((data)=>{
+       //console.log(data)
+       if (data.hasOwnProperty('message')){
+        console.log(data['message'])
+        const alert_btn = document.getElementById('alertbtn');
+        const alert_message = document.getElementById('alertMessage');
+        alert_btn.style.backgroundColor='rgb(43, 230, 143)'
+        alert_btn.style.display = 'block';
+        alert_message.innerHTML = data['message'];
+        setTimeout(() => {
+          location.reload();
+      }, 2000);
+
+      }
+
+      //  if (data.hasOwnProperty('non_field_errors')){
+      //     console.log(data['non_field_errors'][0])
+      //     const alert_btn=document.getElementById('alertbtn')
+      //     alert_btn.style.display='block'
+      //     alert_btn.innerHTML=data['non_field_errors'][0]
+      //  }
+
+
+      if (data.hasOwnProperty('non_field_errors')) {
+        const alert_btn = document.getElementById('alertbtn');
+        const alert_message = document.getElementById('alertMessage');
+        alert_btn.style.display = 'block';
+        alert_btn.style.backgroundColor='rgb(245, 49, 75)'
+        alert_message.innerHTML = data['non_field_errors'][0];
+      }
+      
+
+     })
+
+    }
+
+</script>
+  
 
 </body>
 </html>

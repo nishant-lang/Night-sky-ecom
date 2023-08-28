@@ -2,7 +2,7 @@ from django.shortcuts import render
 from accounts.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from accounts.serializers import RegistrationsSerializers,SendPasswordResetEmailSerializer,UserPasswordResetSerializer,UserLoginSerializer
+from accounts.serializers import RegistrationsSerializers,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
 from django.middleware.csrf import get_token
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
@@ -84,15 +84,20 @@ def User_login(request):
             # print(user)
             if user is not None:
                 if user.is_retailer:
+                    
+                 
                     context={
-                        'user':user
+                        'user':user,
                     }
+
+
                     login(request, user)
                     messages.success(request, 'You have been logged in successfully.')
                     return redirect('/retail/',context)
+                    # return render(request,'retail/home.html',context)
                 else:
                     context={
-                        'user':user
+                        'user':user,
                     }
                     login(request, user)
                     messages.success(request, 'You have been logged in successfully.')
