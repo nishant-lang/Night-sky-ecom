@@ -145,32 +145,36 @@
   </div>
 </div>
 <!-- Blackbox code End -->
+
 <!-- code  start for filter product -->
 <div class="ml-3" style="position:relative;left:250px ;font-family: Trirong ;width: 80vh;">
       <h5 style="color: rgb(61, 59, 61);font-family: Trirong, serif; font-size: 18px;">Filter your product</h5>
       <div class="input-group mb-2">
         <select class="custom-select" id="productFilter">
           <option value="">Select Category</option>
+          <option value="0" >All</option>
           {%for obj in objs%}
-            <option id="product-category" value="cat_{{ obj.id }}">{{ obj.category }}</option>
-              {%endfor%}
+            <option  value="{{obj.id}}">{{obj.category}}</option>
+          {%endfor%}
           </select>
           <div class="input-group-append">
-              <button class="btn btn-primary" type="button" onclick="applyFilter()">
+              <button class="btn btn-primary" type="button" onclick="ApplyFilter()">
                   <i class="bi bi-funnel"></i> Go
               </button>
           </div>
       </div>
   </div>
-<!-- code end for filter -->
+<!-- CODE END FOR FILTER PRODUCT -->
+
 
 <!-- PRODUCT CARDS ARE HERE -->
+
 <div class="col-10" style="position: relative; left: 250px;">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 " style="max-height: 500px; overflow-y: auto;">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3" id="card-area" style="max-height: 500px; overflow-y: auto;">
     {% for item in products %}
       <div class="col">
-        <div class="card shadow my-2">
-          <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/media/{{ item.product_pic }}" alt="Image" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <div class="card shadow my-2 "  >
+          <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/media/{{ item.product_pic}}" alt="Image" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
           <div class="card-body">
             <p class="card-text" style="font-family: Trirong, serif">{{ item.desc|slice:":40" }}</p>
             <p class="card-text mt-0 " style="font-family: Trirong, serif"><b>Price: &#8377;</b>{{ item.price }}</p>
@@ -184,7 +188,7 @@
                   <button type="button" class="btn btn-outline-success btn-outline-secondary ml-1">BUY NOW</button>
                 {% endif %}
               </div>
-              <small class="text-body-secondary" style="font-family: Trirong, serif">{{ item.datetime }}</small>
+              <small class="text-body-secondary" style="font-family: Trirong, serif">{{item.datetime}}</small>
             </div>
           </div>
         </div>
@@ -192,8 +196,6 @@
     {% endfor %}
   </div>
 </div>
-
-
 {% endif %}
 
 <!-- Add Bootstrap JS and jQuery scripts here -->
@@ -203,7 +205,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script> 
 </body>
 </html>
-
  <script>
 
   function updateClock() {
@@ -254,23 +255,18 @@
       const fileInputElement = document.getElementById("picture");
       const selectedFile = fileInputElement.files[0];  
       const formData = new FormData();
-   
-   
       //  console.log(selectedFile)
       //  console.log(product_name)
       //  console.log(product_price)
       //  console.log(product_description)
       //  console.log(categoryId)
       //  console.log(user)
-
-
       formData.append('product_pic', selectedFile);
       formData.append('name', product_name);
       formData.append('desc', product_description);
       formData.append('price', product_price);
       formData.append('category', categoryId);
       formData.append('user', user);
-
 
 fetch(`http://127.0.0.1:8000/retail/addproduct/`,{
 
@@ -283,29 +279,20 @@ fetch(`http://127.0.0.1:8000/retail/addproduct/`,{
        console.log(response.status)
        return response.json()
        //return get_blog_post()
-    
      }).then((data)=>{
        //console.log(data)
        if (data.hasOwnProperty('message')){
-        console.log(data['message'])
+        //console.log(data['message'])
         const alert_btn = document.getElementById('alertbtn');
         const alert_message = document.getElementById('alertMessage');
         alert_btn.style.backgroundColor='rgb(43, 230, 143)'
         alert_btn.style.display = 'block';
         alert_message.innerHTML = data['message'];
+
         setTimeout(() => {
           location.reload();
       }, 2000);
-
       }
-
-      //  if (data.hasOwnProperty('non_field_errors')){
-      //     console.log(data['non_field_errors'][0])
-      //     const alert_btn=document.getElementById('alertbtn')
-      //     alert_btn.style.display='block'
-      //     alert_btn.innerHTML=data['non_field_errors'][0]
-      //  }
-
 
       if (data.hasOwnProperty('non_field_errors')) {
         const alert_btn = document.getElementById('alertbtn');
@@ -314,11 +301,71 @@ fetch(`http://127.0.0.1:8000/retail/addproduct/`,{
         alert_btn.style.backgroundColor='rgb(245, 49, 75)'
         alert_message.innerHTML = data['non_field_errors'][0];
       }
-      
-
      })
-
     }
+</script>
+
+<script>
+
+function ApplyFilter(){
+  
+  const card_area=document.getElementById('card-area')
+  const csrftoken='{{csrftoken}}'
+  const selectelement=document.getElementById('productFilter')
+  const selectedOption = selectelement.options[selectelement.selectedIndex];
+  const categoryId = selectedOption.value;
+  
+if (categoryId=='0'){
+  location.reload();
+}
+
+
+fetch(`http://127.0.0.1:8000/retail/filterproduct/${categoryId}`,{
+  method: "GET",
+  headers: { 'X-CSRFToken': csrftoken },
+  credentials: 'same-origin',
+
+}).then(response => {
+  console.log(response.status)
+  return response.json();
+
+}).then((data) => {
+  
+  card_area.innerHTML = ''
+  
+  const renderHtml = function (item) {
+     
+     const html = `
+     <div class="col">
+      <div class="card shadow my-2">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="${item.product_pic}" alt="Image" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <div class="card-body">
+          <p class="card-text" style="font-family: Trirong, serif">${item.desc.slice(0, 40)}</p>
+          <p class="card-text mt-0 " style="font-family: Trirong, serif"><b>Price: &#8377;</b>${item.price}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary mr-1">View</button>
+              ${!item.is_retailer ? `<button type="button" class="btn btn-outline-warning btn-outline-secondary mx-1">Edit</button>` : ''}
+              ${item.is_retailer ? `<button type="button" class="btn btn-outline-success btn-outline-secondary ml-1">BUY NOW</button>` : ''}
+            </div>
+            <small class="text-body-secondary" style="font-family: Trirong, serif">${new Date(item.datetime).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</small>
+          </div>
+        </div>
+      </div>
+      </div>
+    `;
+
+    card_area.insertAdjacentHTML("beforeend", html);
+    selectelement.selectedIndex = 0;
+  }
+
+  for (let i = 0; i < data.length; i++) {
+    console.log(data[i].datetime);
+    renderHtml(data[i]); 
+  }
+
+});
+}
 
 </script>
   

@@ -3,25 +3,28 @@ from retail.models import Product,ProductCatogory
 from rest_framework.views import APIView
 from retail.serializers import AddProductSerializer,ProductSerializer
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser,FormParser
 from django.middleware.csrf import get_token
 # Create your views here.
 
 def Retailhome(request):
-    # objs=ProductCatogory.objects.all()
     objs = ProductCatogory.objects.all()
     user=request.user
     csrftoken = get_token(request)
     # print(csrftoken)
     products=Product.objects.filter(user=user).order_by('-id')
     # print(products)
-
+    
+    for product in products:
+        print("Product ID:", product.id)
+        print("Product Name:", product.name)
+        print("Product TimeDate",product.datetime)
     context={
        'products':products,
        'csrftoken':csrftoken,
        'objs':objs
     }
-    return render(request,'retail/home.html',context) #'objs':objs,
+    return render(request,'retail/home.html',context) 
 
 
 # API FOR ADD THE PRODUCT
