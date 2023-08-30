@@ -5,20 +5,17 @@ from retail.serializers import AddProductSerializer,ProductSerializer
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser,FormParser
 from django.middleware.csrf import get_token
+from django.db.models import Q
 # Create your views here.
 
 def Retailhome(request):
     objs = ProductCatogory.objects.all()
-    user=request.user
+    
     csrftoken = get_token(request)
     # print(csrftoken)
-    products=Product.objects.filter(user=user).order_by('-id')
+    products=Product.objects.filter(user=request.user).order_by('-id')
     # print(products)
     
-    for product in products:
-        print("Product ID:", product.id)
-        print("Product Name:", product.name)
-        print("Product TimeDate",product.datetime)
     context={
        'products':products,
        'csrftoken':csrftoken,
@@ -50,7 +47,7 @@ class AddProduct(APIView):
 class FiltersProducts(APIView):
 
     def get(self,request,category_id):
-        related_products = Product.objects.filter(category_id=category_id)
+        related_products = Product.objects.filter(Q(category_id=category_id) & Q(user=request.user))
         serializer = ProductSerializer(related_products, many=True)
         return Response(serializer.data)
         

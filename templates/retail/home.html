@@ -166,9 +166,7 @@
   </div>
 <!-- CODE END FOR FILTER PRODUCT -->
 
-
 <!-- PRODUCT CARDS ARE HERE -->
-
 <div class="col-10" style="position: relative; left: 250px;">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3" id="card-area" style="max-height: 500px; overflow-y: auto;">
     {% for item in products %}
@@ -234,8 +232,7 @@
       product_name.value = '';
       product_description.value = '';
       product_price.value = '';
-      selectelement.selectedIndex = 0;  // Reset the selected index to the default option
-      fileInputElement.value = null; 
+      selectelement.selectedIndex = 0;  
       setTimeout(() => {
         location.reload();
     }, 2000);
@@ -255,12 +252,8 @@
       const fileInputElement = document.getElementById("picture");
       const selectedFile = fileInputElement.files[0];  
       const formData = new FormData();
-      //  console.log(selectedFile)
-      //  console.log(product_name)
-      //  console.log(product_price)
-      //  console.log(product_description)
-      //  console.log(categoryId)
-      //  console.log(user)
+   
+
       formData.append('product_pic', selectedFile);
       formData.append('name', product_name);
       formData.append('desc', product_description);
@@ -319,7 +312,6 @@ if (categoryId=='0'){
   location.reload();
 }
 
-
 fetch(`http://127.0.0.1:8000/retail/filterproduct/${categoryId}`,{
   method: "GET",
   headers: { 'X-CSRFToken': csrftoken },
@@ -330,12 +322,11 @@ fetch(`http://127.0.0.1:8000/retail/filterproduct/${categoryId}`,{
   return response.json();
 
 }).then((data) => {
-  
   card_area.innerHTML = ''
-  
-  const renderHtml = function (item) {
-     
-     const html = `
+
+  const renderHtml = function (item){
+
+    const html = `
      <div class="col">
       <div class="card shadow my-2">
         <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="${item.product_pic}" alt="Image" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -354,22 +345,16 @@ fetch(`http://127.0.0.1:8000/retail/filterproduct/${categoryId}`,{
       </div>
       </div>
     `;
-
     card_area.insertAdjacentHTML("beforeend", html);
     selectelement.selectedIndex = 0;
   }
-
   for (let i = 0; i < data.length; i++) {
     console.log(data[i].datetime);
     renderHtml(data[i]); 
   }
-
 });
 }
-
 </script>
-  
-
 </body>
 </html>
 
