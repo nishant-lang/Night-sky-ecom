@@ -87,13 +87,11 @@ DATABASES = {
 
 'default':{
        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'New_ecom',
+        'NAME':'Ecom_db',
         'USER':'postgres',
         'PASSWORD':'1234',
         'PORT':'5432' 
-   
     }
-
 }
 
 

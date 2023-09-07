@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+import uuid
+
 
 # Create your models here.
 class UserProfileManager(BaseUserManager):
@@ -37,10 +39,9 @@ class UserProfileManager(BaseUserManager):
                 
 class User(AbstractBaseUser,PermissionsMixin):
     """data base model for the user """
-
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email=models.EmailField(max_length=50,unique=True)
     username=models.CharField(max_length=50)
-    # fullname=models.models.CharField (max_length=50)
     gender=models.CharField(max_length=10)
     city=models.CharField(max_length=50)
     state=models.CharField(max_length=50)
