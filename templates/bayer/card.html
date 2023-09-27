@@ -1,14 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,28 +18,83 @@
 
 <!-- Header (Create your own header with navigation and branding) -->
 <header class="bg-primary text-white text-center py-3">
-    <h1>Your Brand</h1>
+    <!-- <h1>Your Brand</h1> -->
     <!-- Add navigation links, search bar, etc., here -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 " style="color: aliceblue; font-family: Trirong;font-size: 17px">
+        <a class="navbar-brand" style="color: aliceblue; " href="#">Ecom</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" style="color: aliceblue; " href="#">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: aliceblue; " href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"  style="color: aliceblue; " href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+        </div>
+        <!-- <a href="" style="color: white;text-decoration: none;"><i class="fas fa-cart-plus" ></i> Cart</a> -->
+        <!-- <a href="#" style="color: white; text-decoration: none; position: relative;">
+          <span style="background-color: red; color: white; border-radius: 50%; padding: 5px 8px; font-size: 12px; position: absolute; top: -8px; right: -8px;">1</span> <!-- Update this number dynamically -->
+          <!-- <i class="fas fa-cart-plus"></i> Cart -->
+      <!-- </a> -->
+      <a href="/bayer/user-cart-detail/" style="color: white; text-decoration: none; font-family: Trirong">
+        <span style="position: relative;">
+            <i class="fas fa-cart-plus" style="font-size: 17px;"> Cart</i> <!-- Cart Icon -->
+            <span style="background-color: red; color: white; border-radius: 50%; padding: 5px 5px; font-size: 9px; position: absolute; top: -20px; right: 35px;">1</span> <!-- Update this number dynamically -->
+        </span>
+    </a>
+          <div class="nav-item dropdown" style="font-family: Trirong;">
+            <a class="nav-link dropdown-toggle" style="color: aliceblue; font-family: Trirong; font-size: 17px" role="button" data-toggle="dropdown" aria-expanded="false">
+
+            {% if user.is_authenticated %}
+              Welcome, {{ user.username }}
+            {% else %}
+              Welcome, Guest
+            {% endif %}
+
+            </a>
+            <div class="dropdown-menu" style="font-family: Trirong;">
+              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" href="#">Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/userlogout/">Logout</a>
+            </div>
+          </div>
+      </nav>
+
 </header>
 
 <!-- Product Detail Page Content -->
 <div class="container mt-5">
-    <!-- <div class="row"> -->
-            <!-- <div class="col-6" style="right: 22vh;"> -->
-                <!-- <img src="/media/{{obj.product_pic}}" class="img-fluid" style="box-shadow: 2px; border: 1px solid rgba(156, 157, 158, 0.5);  width: 800px;height: 400px; " alt="Product Image"> -->
-                <div class="row">
-                    <!-- <div class="col-12 col-md-6"> -->
-                        <div class="col-6" style="right: 22vh;"> 
+                <div class="row" >
+                        <div class="col-6" style="right: 22vh;" > 
                         <!-- Carousel container -->
                         <div id="productCarousel" class="carousel slide" >
                             <!-- Indicators -->
-                            <ol class="carousel-indicators">
+                            <ol class="carousel-indicators" >
                                 <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
                                 <!-- Add more indicators for additional images if needed -->
                             </ol>
-                
                             <!-- Slides -->
-                            <div class="carousel-inner" >
+                            <div class="carousel-inner">
                                 <!-- Image 1 -->
                                 <div class="carousel-item active" >
                                     <img src="/media/{{obj.product_pic}}" class="d-block w-100" alt="Product Image"  style="box-shadow: 2px; border: 1px solid rgba(156, 157, 158, 0.5);  width: 800px;height: 400px;">
@@ -71,17 +116,21 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-                
-                       
-                
         <div class="text-cent
         er my-2">
-            <button class="btn-xl btn-primary btn-lg" style="background-color: rgb(251, 176, 27); padding: 5px 74px; border: none;">
-                <i class="fas fa-cart-plus"></i> Add to Cart
-            </button>
-            <button class="btn-xl btn-primary btn-lg" style="background-color: rgb(237, 104, 9); padding: 5px 74px; border: none; ">
-                <i class="fas fa-bolt"></i> BUY NOW
-            </button>
+             <!-- <a class="btn-xl btn-primary btn-lg addToCartBtn mr-1" style="background-color: rgb(251, 176, 27); padding: 5px 58px; border: none; text-decoration: none;" data-product-id="{{ obj.id }}">
+                <i class="fas fa-cart-plus"></i> ADD TO CART
+             </a>  -->
+             <a class="btn-xl btn-primary btn-lg addToCartBtn mr-1" style="background-color: rgb(251, 176, 27); padding: 5px 58px; border: none; text-decoration: none; cursor: pointer;" data-product-id="{{ obj.id }}">
+              <i class="fas fa-cart-plus"></i> ADD TO CART
+          </a>
+          
+                   
+          <a href="cart.html" class="btn-xl btn-primary btn-lg" style="background-color: rgb(237, 104, 9); padding: 5px 77px; border: none; text-decoration: none;">
+            <i class="fas fa-bolt"></i> BUY NOW
+        </a>
+        
+          
         </div>
         </div>
         
@@ -101,8 +150,9 @@
 
 
 
+
 <!-- Footer (Create your own footer with copyright information) -->
-<footer class="container-fluid text-center bg-light mt-5">
+<footer class="container-fluid text-center bg-light" style="margin-top: 100vh;font-family: Trirong, serif; ">
     <p>&copy; 2023 Your Brand. All rights reserved.</p>
 </footer>
 
@@ -133,6 +183,41 @@
             carouselInstance.next();
         });
     });
+</script>
+<script>
+ // Get a reference to the "Add to Cart" button
+ 
+ const addToCartButton = document.querySelector('.addToCartBtn');
+  
+ // Add a click event listener to the button
+ addToCartButton.addEventListener('click', function() {
+    // Get the product ID from the data attribute
+    const productId = this.getAttribute('data-product-id');
+    const csrftoken='{{csrftoken}}'
+    console.log('Product ID:', productId);
+
+    fetch(`http://127.0.0.1:8000/bayer/add-to-cart/${productId}/`,{
+
+      method:"POST",
+      headers:{'X-CSRFToken':csrftoken,},
+      //body:formData,
+      credential:'same-origin',
+     
+    }).then(response => {
+      console.log(response.status)
+      return response.json()
+      
+      
+      //return get_blog_post()
+    }).then((data)=>{
+      console.log(data)
+      if (data.hasOwnProperty('message')){
+
+      }
+    })
+
+});
+
 </script>
 
 

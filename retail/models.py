@@ -26,6 +26,7 @@ class Product(models.Model):
     desc=models.CharField(max_length=200)
     datetime = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True, blank=True)
+    user_cart=models.ManyToManyField(User,blank=True, related_name='cart_products')
 
     def save(self, *args, **kwargs):
 

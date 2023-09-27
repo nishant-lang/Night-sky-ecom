@@ -45,8 +45,10 @@ class AddProduct(APIView):
 
 class FiltersProducts(APIView):
     def get(self,request,id):
+
         related_products = Product.objects.filter(Q(category_id=id) & Q(user=request.user))
         serializer = ProductSerializer(related_products, many=True)
+        
         return Response(serializer.data)
         
 

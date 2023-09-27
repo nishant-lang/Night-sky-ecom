@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ecom</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+      <!-- Add Bootstrap CSS link -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Add Font Awesome CSS link -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     
 </head>
 
 <body style="background-color: rgb(249, 249, 250);">
  
-    <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 ">
+    {% comment %} <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 ">
         <a class="navbar-brand" href="#">Ecome</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -62,8 +66,73 @@
               <a class="dropdown-item" href="/userlogout/">Logout</a>
             </div>
           </div>
-      </nav>
+      </nav> {% endcomment %}
 
+
+      <header class="bg-primary text-white text-center py-3">
+        <!-- <h1>Your Brand</h1> -->
+        <!-- Add navigation links, search bar, etc., here -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 " style="color: aliceblue; font-family: Trirong;font-size: 17px">
+            <a class="navbar-brand" style="color: aliceblue; " href="#">Ecom</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" style="color: aliceblue; " href="#">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" style="color: aliceblue; " href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle"  style="color: aliceblue; " href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled">Disabled</a>
+                </li>
+              </ul>
+            </div>
+            <!-- <a href="" style="color: white;text-decoration: none;"><i class="fas fa-cart-plus" ></i> Cart</a> -->
+            <!-- <a href="#" style="color: white; text-decoration: none; position: relative;">
+              <span style="background-color: red; color: white; border-radius: 50%; padding: 5px 8px; font-size: 12px; position: absolute; top: -8px; right: -8px;">1</span> <!-- Update this number dynamically -->
+              <!-- <i class="fas fa-cart-plus"></i> Cart -->
+          <!-- </a> -->
+          <a href="/bayer/user-cart-detail/" style="color: white; text-decoration: none; font-family: Trirong">
+            <span style="position: relative;">
+                <i class="fas fa-cart-plus" style="font-size: 17px;"> Cart</i> <!-- Cart Icon -->
+                <span style="background-color: red; color: white; border-radius: 50%; padding: 5px 5px; font-size: 9px; position: absolute; top: -20px; right: 35px;">1</span> <!-- Update this number dynamically -->
+            </span>
+        </a>
+              <div class="nav-item dropdown" style="font-family: Trirong;">
+                <a class="nav-link dropdown-toggle" style="color: aliceblue; font-family: Trirong; font-size: 17px" role="button" data-toggle="dropdown" aria-expanded="false">
+    
+                {% if user.is_authenticated %}
+                  Welcome, {{ user.username }}
+                {% else %}
+                  Welcome, Guest
+                {% endif %}
+    
+                </a>
+                <div class="dropdown-menu" style="font-family: Trirong;">
+                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="#">Settings</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/userlogout/">Logout</a>
+                </div>
+              </div>
+          </nav>
+    
+    </header>
       <!-- BELOW CODE IS FOR THIS IS FOR THE CROWSEL  -->
 
 <div class="col-12">
