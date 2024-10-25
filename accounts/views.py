@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from rest_framework import status
 
+
 def AccountHome(request):
     csrf_token = get_token(request)
     context = {
@@ -27,7 +28,6 @@ def AccountLogin(request):
     }
     
     return render(request,"accounts/login.html",context)
-
 
 
 
@@ -84,13 +84,10 @@ def User_login(request):
             # print(user)
             if user is not None:
                 if user.is_retailer:
-                    
-                 
+                
                     context={
                         'user':user,
                     }
-
-
                     login(request, user)
                     messages.success(request, 'You have been logged in successfully.')
                     return redirect('/retail/',context)

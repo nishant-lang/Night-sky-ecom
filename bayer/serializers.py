@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 class CartProductSerializer(serializers.Serializer):
+    
     id = serializers.IntegerField()
     name = serializers.CharField()
     product_pic = serializers.ImageField()

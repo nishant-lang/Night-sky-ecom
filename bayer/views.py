@@ -16,6 +16,7 @@ def BayerHome(request):
     
     return render(request,'bayer/home.html',{'obj':obj})
 
+
 @login_required
 def CardDetail(request,slug):
     csrftoken = get_token(request)
@@ -53,6 +54,7 @@ def add_to_cart(request, product_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])  # Use the custom permission class
 def remove_from_cart(request, product_id):
+    """This function is made for remove the product from cart of the user"""
     product = Product.objects.get(pk=product_id)
     request.user.cart_products.remove(product)
     return Response({'message':'Product removed from cart successfully.'})
@@ -61,6 +63,7 @@ def remove_from_cart(request, product_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def view_cart(request):
+    """This function is made for show the all added product into cart""" 
     cart_products = request.user.cart_products.all()
   
     serializer = CartProductSerializer(cart_products, many=True)
