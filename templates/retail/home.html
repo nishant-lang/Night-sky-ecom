@@ -307,6 +307,7 @@ function ApplyFilter(){
   const selectelement=document.getElementById('productFilter')
   const selectedOption = selectelement.options[selectelement.selectedIndex];
   const categoryId = selectedOption.value;
+  
   console.log(categoryId)
   
 if (categoryId=='0'){
@@ -346,6 +347,7 @@ fetch(`http://127.0.0.1:8000/retail/filterproduct/${categoryId}`,{
       </div>
       </div>
     `;
+
     card_area.insertAdjacentHTML("beforeend", html);
     selectelement.selectedIndex = 0;
   }
@@ -355,6 +357,7 @@ fetch(`http://127.0.0.1:8000/retail/filterproduct/${categoryId}`,{
   }
 });
 }
+
 </script>
 </body>
 </html>

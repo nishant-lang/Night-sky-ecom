@@ -17,6 +17,7 @@ class ProductCatogory(models.Model):
         return self.category
 
 class Product(models.Model):
+    
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category=models.ForeignKey(ProductCatogory,on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE) 

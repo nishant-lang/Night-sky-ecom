@@ -35,6 +35,8 @@ def AccountLogin(request):
 class UserRegistrations(APIView):
 
     def post(self,request):
+        
+        print(request.data)
 
         serializer=RegistrationsSerializers(data=request.data)
         if serializer.is_valid():
@@ -67,6 +69,8 @@ def User_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+
+        print(request.POST)
         # print(email)
         # print(password)
        

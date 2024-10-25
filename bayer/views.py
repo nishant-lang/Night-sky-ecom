@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.middleware.csrf import get_token
 from bayer.serializers import CartProductSerializer
 
+
 @login_required
 def BayerHome(request):
     obj=Product.objects.all()
@@ -28,8 +29,8 @@ def CardDetail(request,slug):
         'csrftoken':csrftoken
     }
 
-    print(obj.name)
-    print(obj.price)
+    # print(obj.name)
+    # print(obj.price)
 
     return render(request,"bayer/card.html",context)
 
@@ -45,29 +46,37 @@ def CartDetail(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])  # Use the custom permission class
-def add_to_cart(request, product_id):
+@permission_classes([IsAuthenticated])  # Used the custom permission class
+def add_to_cart(request,product_id):
+
     product = Product.objects.get(id=product_id)
     request.user.cart_products.add(product)
+
     return Response({'message': 'Product added to cart successfully.'})
 
+
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])  # Use the custom permission class
+@permission_classes([IsAuthenticated])  # Used the custom permission class
 def remove_from_cart(request, product_id):
+    
     """This function is made for remove the product from cart of the user"""
     product = Product.objects.get(pk=product_id)
     request.user.cart_products.remove(product)
+
     return Response({'message':'Product removed from cart successfully.'})
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+
 def view_cart(request):
+
     """This function is made for show the all added product into cart""" 
+
     cart_products = request.user.cart_products.all()
   
     serializer = CartProductSerializer(cart_products, many=True)
     
-    print(serializer.data)
+    # print(serializer.data)
 
     return Response(serializer.data)

@@ -26,8 +26,11 @@ class AddProductSerializer(serializers.Serializer):
             return attrs 
 
     def create(self, validated_data):
+
         user = self.context['user']
+
         product = Product.objects.create(
+             
             category=validated_data['category'],
             name=validated_data['name'],
             product_pic=validated_data['product_pic'],
