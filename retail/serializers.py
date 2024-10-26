@@ -17,6 +17,7 @@ class AddProductSerializer(serializers.Serializer):
             user = self.context['user']
             name=attrs.get('name')
             category=attrs.get('category')
+                               
             price=attrs.get('price')
             desc=attrs.get('desc')
     
