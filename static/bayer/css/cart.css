@@ -1,0 +1,126 @@
+/* General Styles */
+body {
+    background-color: rgb(239, 224, 247);
+    font-family: Trirong, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    font-size: 17px;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: aliceblue !important;
+}
+
+.navbar-toggler {
+    border-color: white;
+}
+
+.nav-item .dropdown-menu {
+    background-color: white;
+}
+
+.nav-item .dropdown-menu .dropdown-item {
+    color: black;
+}
+
+.nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: lightgray;
+}
+
+/* Cart Container */
+.cart-container {
+    margin-top: 100px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.card-body {
+    display: flex;
+    align-items: center;
+}
+
+.card-body img {
+    height: 150px;
+    width: 120px;
+}
+
+.card-body p {
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(70, 61, 61);
+}
+
+.card-body .product-details {
+    margin-left: 20px;
+}
+
+.product-details p {
+    font-size: 18px;
+    color: rgb(182, 193, 193);
+}
+
+/* Save for Later & Remove Links */
+.card-body .d-flex a {
+    color: rgb(32, 31, 31);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.card-body .d-flex a:hover {
+    color: blue;
+}
+
+/* Order Button */
+.place-order-btn {
+    background-color: rgb(235, 98, 24);
+    width: 250px;
+    border-radius: 0;
+    color: white;
+    font-weight: bold;
+}
+
+/* Sticky Footer */
+.d-flex.justify-content-end {
+    background-color: white;
+    height: 60px;
+    position: sticky;
+    bottom: 0;
+    box-shadow: 0px -6px 10px rgba(0, 0, 0, 0.1);
+    padding-right: 20px;
+}
+
+/* Sidebar Card */
+.col-md-4 .card {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    width: 300px;
+}
+
+.card-header {
+    background-color: #17a2b8;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .col-md-4 {
+        display: none;
+    }
+
+    .place-order-btn {
+        width: 100%;
+    }
+}

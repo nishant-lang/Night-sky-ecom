@@ -30,9 +30,11 @@ def Retailhome(request):
 class AddProduct(APIView):
     parser_classes = (MultiPartParser, FormParser)
     def post(self,request):
+
         context={
             'user':request.user
         }
+        
         serializer=AddProductSerializer(data=request.data,context=context)
     
         if serializer.is_valid():

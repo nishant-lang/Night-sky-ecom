@@ -1,0 +1,363 @@
+
+
+:root {
+    /* General Colors */
+    --primary-color: #3498db; /* Blue */
+    --secondary-color: #2ecc71; /* Green */
+    --accent-color: #e74c3c; /* Red */
+    --background-color: #f4f4f4; /* Light Gray */
+    --text-color: #2c3e50; /* Dark Text */
+    --link-color: #2980b9; /* Blue Link */
+    --link-hover-color: #1abc9c; /* Green Link Hover */
+
+    /* Header and Footer */
+    --header-background-color: #34495e; /* Dark Blue-Gray */
+    --header-text-color: #ecf0f1; /* Light Text */
+    --footer-background-color: #2c3e50; /* Dark Blue-Gray Footer */
+    --footer-text-color: #bdc3c7; /* Light Gray Footer Text */
+
+    /* Border Colors */
+    --border-color: #dcdcdc; /* Light Gray */
+    --active-border-color: #3498db; /* Blue */
+    --error-border-color: #e74c3c; /* Red */
+    --warning-border-color: #f39c12; /* Yellow */
+    --success-border-color: #2ecc71; /* Green */
+
+    /* Shadows */
+    --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px; /* Light Shadow */
+    --header-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px; /* Header Shadow */
+    --card-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px; /* Card Shadow */
+    --button-hover-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px; /* Button Hover Shadow */
+    
+    /* Button Colors */
+    --button-primary-bg: #3498db; /* Primary Button Background */
+    --button-primary-color: #ffffff; /* Primary Button Text Color */
+    --button-secondary-bg: #2ecc71; /* Secondary Button Background */
+    --button-secondary-color: #ffffff; /* Secondary Button Text Color */
+    --button-hover-bg: #2980b9; /* Button Hover Background */
+    --button-disabled-bg: #bdc3c7; /* Disabled Button Background */
+    --add-to-cart:rgb(251, 176, 27);
+    --bye-btn: rgb(237, 104, 9);
+    
+    /* Form Fields */
+    --input-border-color: #ccc; /* Input Border */
+    --input-focus-border-color: #3498db; /* Input Focus Border */
+    --input-placeholder-color: #7f8c8d; /* Input Placeholder */
+    
+    /* Notifications */
+    --success-bg: #2ecc71; /* Success Notification Background */
+    --error-bg: #e74c3c; /* Error Notification Background */
+    --warning-bg: #f39c12; /* Warning Notification Background */
+    --info-bg: #3498db; /* Info Notification Background */
+
+    /* Gradient Colors */
+    --gradient-primary: linear-gradient(135deg, #3498db, #2ecc71); /* Gradient Blue to Green */
+    --gradient-accent: linear-gradient(135deg, #e74c3c, #f39c12); /* Gradient Red to Yellow */
+
+    /* Alert & Badge Colors */
+    --alert-bg: #e74c3c; /* Alert Background */
+    --badge-bg: #9b59b6; /* Badge Background */
+
+    /* Hover & Active States */
+    --hover-bg-color: #ecf0f1; /* Hover Background */
+    --active-bg-color: #dcdcdc; /* Active Background */
+    
+    /* Utility Colors */
+    --light-gray: #ecf0f1; /* Light Gray */
+    --dark-gray: #7f8c8d; /* Dark Gray */
+    --transparent-black: rgba(0, 0, 0, 0.5); /* Transparent Black */
+    --transparent-white: rgba(255, 255, 255, 0.5); /* Transparent White */
+}
+
+
+
+
+body{
+   
+    margin:10px;
+    padding: 5px;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.card-container{
+    display: flex;
+    align-items: self-start;
+    align-items: stretch; /* Ensures all children take equal height */
+    justify-content:center ; 
+    
+}
+
+
+.product-pic-container{
+    padding: 0 20px 5px 5px;
+}
+
+
+
+.product-pic img{
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 4px;
+    border: 1 px solid var( --border-color) ;
+
+}
+
+
+.product-btn{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+
+/* .mid-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 49%;
+    height: 40px;
+    border-radius: 4px;
+    color: var(--header-text-color);
+    text-decoration: none;
+} */
+
+.form-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 49%;
+    height: 40px;
+    color: var(--header-text-color);
+    text-decoration: none;
+    
+    
+}
+.form-btn button{
+    width: 49%;
+    height: 40px;
+    border-radius: 4px;
+    background-color: var(--bye-btn);
+    cursor: pointer;
+    border: none;
+    color: var(--background-color);
+}
+
+
+#add{
+    background-color: var(--add-to-cart);
+    cursor: pointer;
+}
+
+
+
+
+
+.product-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 520px; /* Adjust as needed */
+    height: 480px; /* Adjust as needed */
+    overflow: hidden;
+}
+
+.product-pic {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior:smooth;
+    width:100%;
+    height: 100%; 
+    scrollbar-width: none; /* Hide scrollbar for better UI */
+    
+
+}
+
+.product-pic img {
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    object-fit: cover;
+    border-radius:10px;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0.1, 0, 0, 0.1);
+    
+}
+
+.next-btn {
+    position: absolute;
+    background-color:transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.prev-btn {
+    position: absolute;
+    background-color:transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.prev-btn {
+    left: 0;
+}
+
+.next-btn {
+    right: 0;
+}
+
+
+
+/* Dots Styling */
+.dots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    background-color: gray;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: black;
+}
+
+
+.vertical-line {
+    width: 0.2px; /* Thickness of the line */
+    background-color: black; /* Color of the line */
+  }
+
+  .payment-container{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:var(--active-bg-color);
+    padding: 10px;
+
+  }
+
+
+
+  .payment-section {
+    max-width: max-content;
+    width: auto;
+    height: 300px;
+    margin: auto;
+    padding: 5px 50px 50px 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    gap: 10px;
+    
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.payment-method {
+    display: flex;
+    flex-direction: column;
+    /* gap: 10px; */
+}
+
+.payment-method input
+{
+    width: 100%;
+    padding: 10px;
+
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+} 
+
+
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 200px;
+    max-height: 150px; /* Limit height */
+    overflow-y: auto;  /* Enable scroll */
+    border: 1px solid #ddd;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+
+
+
+.pay-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+}
+
+.pay-btn:hover {
+    background-color: #218838;
+}
+

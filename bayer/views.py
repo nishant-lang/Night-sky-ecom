@@ -58,10 +58,12 @@ def add_to_cart(request,product_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])  # Used the custom permission class
 def remove_from_cart(request, product_id):
-    
+    print(product_id)
     """This function is made for remove the product from cart of the user"""
     product = Product.objects.get(pk=product_id)
+    print(product)
     request.user.cart_products.remove(product)
+
 
     return Response({'message':'Product removed from cart successfully.'})
 

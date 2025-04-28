@@ -1,22 +1,165 @@
 
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product-card</title>
+
+  <!-- Adding a CSS stylesheet -->
+<link rel="stylesheet" href="{% static 'bayer/css/card.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+</head>
+
+<body>
+
+<div class="card-container">
+
+  <div class="product-pic-container">
+
+    <div class="product-container">
+      <button class="prev-btn">&#10094;</button>
+      <div class="product-pic">
+          <img src="/media/{{obj.product_pic}}" alt="Product-img">
+
+          <img src="/static/vendors/images/img2.jpg" alt="Product-img">
+          <img src="/static/vendors/images/img3.jpg" alt="Product-img">
+          <img src="/static/vendors/images/img4.jpg" alt="Product-img">
+      </div>
+      <button class="next-btn">&#10095;</button>
+  </div>
+    <!-- Dots Container -->
+    <div class="dots-container"></div>
+  
+     <div class="product-btn">
+
+      <form class="form-btn" action="{% url 'add_to_cart' obj.id %}" method="POST">
+        {% csrf_token %}
+
+      <button id="add">
+        <i class="fas fa-cart-plus"></i> ADD TO CART
+    </button>
+  </form>
+      
+  <form class="form-btn" action="{% url 'create_checkout_session' obj.id %}" method="POST">
+    {% csrf_token %}       
+    <button>
+      <i class="fas fa-bolt"></i> BUY NOW
+  </button>
+  </form>
+  
+  
+
+
+  </div>
+
+  <div class="product-price">
+    <h2>{{obj.name}}</h2>
+    <b>Price: &#8377;</b>{{obj.price}}</p>
+    <p>Dicount:40%</p>
+    <p><strong>Rating:</strong> 4.5 (1234 reviews)</p>
+    <h4>Product Description</h4>
+    <p>{{obj.desc}}  </p>
+    
+  </div>
+
+  </div>
+
+  
+ 
+  <div class="vertical-line">
+ 
+  </div>
+
+
+  <div class="payment-container">
+    <div class="payment-section">
+      <h2>Select Payment Method</h2>
+  
+      <div class="payment-options">
+          <label class="payment-option">
+              <input type="radio" name="payment-method" value="upi" checked>
+              <span>UPI</span>
+          </label>
+          
+          <label class="payment-option">
+              <input type="radio" name="payment-method" value="card">
+              <span>Debit/Credit Card</span>
+          </label>
+      </div>
+  
+      <div class="payment-details">
+          <!-- UPI Payment Section -->
+          <div class="payment-method upi-payment">
+              <input type="text" placeholder="Enter UPI ID (e.g., example@upi)">
+              <div class="btn">
+                <button class="pay-btn">Pay via UPI</button>
+              </div>
+              
+          </div>
+  
+          </div>
+  
+          <!-- Card Payment Section -->
+          <div class="payment-method card-payment" style="display: none;">
+              <input type="text" placeholder="Card Number">
+              <input type="text" placeholder="MM/YY">
+              <input type="text" placeholder="CVV">
+              
+              <div class="btn">
+                <button class="pay-btn">Pay via Card</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  </div>
+ 
+</div>
+
+
+
+
+
+
+
+<!-- Adding a JavaScript file -->
+<script src="{% static 'bayer/js/card.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
-    
-    <!-- Add Bootstrap CSS link -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Add Font Awesome CSS link -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-
+ 
     <!-- Add custom CSS for styling -->
-    <link rel="stylesheet" href="custom.css">
+    <link href="/bayer.css/card.css" rel="stylesheet">
 </head>
-<body>
 
-<!-- Header (Create your own header with navigation and branding) -->
+<body > {% endcomment %}
+
+{% comment %} <!-- Header (Create your own header with navigation and branding) -->
 <header class="bg-primary text-white text-center py-3">
     <!-- <h1>Your Brand</h1> -->
     <!-- Add navigation links, search bar, etc., here -->
@@ -80,10 +223,13 @@
           </div>
       </nav>
 
-</header>
+</header> {% endcomment %}
+
+
 
 <!-- Product Detail Page Content -->
-<div class="container mt-5">
+
+{% comment %} <div class="card-container">
                 <div class="row" >
                         <div class="col-6" style="right: 22vh;" > 
                         <!-- Carousel container -->
@@ -146,79 +292,26 @@
             
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 
 
 
 
 <!-- Footer (Create your own footer with copyright information) -->
-<footer class="container-fluid text-center bg-light" style="margin-top: 100vh;font-family: Trirong, serif; ">
+{% comment %} <footer class="container-fluid text-center bg-light" style="margin-top: 100vh;font-family: Trirong, serif; ">
     <p>&copy; 2023 Your Brand. All rights reserved.</p>
-</footer>
+</footer> {% endcomment %}
 
 
 <!-- Add Bootstrap JS and jQuery (required for Bootstrap) links at the end of the body -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+{% comment %} <script>{'static','\bayer\bayer.js\card.js'}</script> {% endcomment %}
+
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get references to the previous and next buttons
-        var prevButton = document.querySelector('.carousel-control-prev');
-        var nextButton = document.querySelector('.carousel-control-next');
-        
-        // Get a reference to the carousel element
-        var carousel = document.getElementById('productCarousel');
 
-        // Add click event listener for the "Previous" button
-        prevButton.addEventListener('click', function() {
-            var carouselInstance = new bootstrap.Carousel(carousel);
-            carouselInstance.prev();
-        });
-
-        // Add click event listener for the "Next" button
-        nextButton.addEventListener('click', function() {
-            var carouselInstance = new bootstrap.Carousel(carousel);
-            carouselInstance.next();
-        });
-    });
-</script>
-<script>
- // Get a reference to the "Add to Cart" button
- 
- const addToCartButton = document.querySelector('.addToCartBtn');
-  
- // Add a click event listener to the button
- addToCartButton.addEventListener('click', function() {
-    // Get the product ID from the data attribute
-    const productId = this.getAttribute('data-product-id');
-    const csrftoken='{{csrftoken}}'
-    console.log('Product ID:', productId);
-
-    fetch(`http://127.0.0.1:8000/bayer/add-to-cart/${productId}/`,{
-
-      method:"POST",
-      headers:{'X-CSRFToken':csrftoken,},
-      //body:formData,
-      credential:'same-origin',
-     
-    }).then(response => {
-      console.log(response.status)
-      return response.json()
-      
-      
-      //return get_blog_post()
-    }).then((data)=>{
-      console.log(data)
-      if (data.hasOwnProperty('message')){
-
-      }
-    })
-
-});
-
-</script>
 
 
 </body>

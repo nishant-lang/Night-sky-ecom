@@ -27,7 +27,16 @@ SECRET_KEY = 'django-insecure-(rn8pz##a7#wt%@uus+s4=&sihyij6xcf$gppch)qxzvefiqyl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost","comic-monthly-kodiak.ngrok-free.app"]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    # "https://stripe.com",
+    # "https://hooks.stripe.com",
+    "https://comic-monthly-kodiak.ngrok-free.app"
+]
+
+
 
 
 # Application definition
@@ -43,6 +52,7 @@ INSTALLED_APPS = [
     'accounts',
     'retail',
     'bayer',
+    'payments'
 ]
 
 MIDDLEWARE = [
@@ -167,3 +177,46 @@ REST_FRAMEWORK = {
 }
 
 PASSWORD_RESET_TIMEOUT=900  #900 Sec=15 Min.
+
+
+# Stripe credetials
+STRIPE_PUBLIC_KEY =os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET")
+
+
+
+#Code for logging the problem.
+
+
+import os
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {  
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "stripe.log") if os.name == "nt" else "/var/log/stripe.log",
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} {name} {message}",
+            "style": "{",
+        },
+    },
+    "loggers": {
+        "stripe": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}

@@ -39,12 +39,16 @@ class UserRegistrations(APIView):
         print(request.data)
 
         serializer=RegistrationsSerializers(data=request.data)
+        print(serializer)
+
         if serializer.is_valid():
             serializer.save()
-            return Response({"message":" Your Registration Successfull"},status=200,)
+            return Response({"message":" Your Registration Successfull"},status=200)
+        
         else:
             if 'non_field_errors' in serializer.errors:
                 return Response({'regd_pass_errors':serializer.errors['non_field_errors'][0]},status=400)
+            
             else:
                 if 'email' in serializer.errors:
                    return Response(serializer.errors,status=400)
@@ -142,7 +146,9 @@ class SendPasswordResetEmailView(APIView):
         serializer=SendPasswordResetEmailSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
+            
             return Response({'msg':'Password Reset link sent.Pease check your Email.'},status.HTTP_200_OK)
+        
         if 'non_field_errors' in serializer.errors:
             return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
     
