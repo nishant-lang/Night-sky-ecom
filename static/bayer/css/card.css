@@ -84,6 +84,7 @@ body{
     align-items: self-start;
     align-items: stretch; /* Ensures all children take equal height */
     justify-content:center ; 
+    margin-top: 26px;
     
 }
 
@@ -137,7 +138,7 @@ body{
     
 }
 .form-btn button{
-    width: 49%;
+    width: 98%;
     height: 40px;
     border-radius: 4px;
     background-color: var(--bye-btn);

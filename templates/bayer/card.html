@@ -13,11 +13,77 @@
   <!-- Adding a CSS stylesheet -->
 <link rel="stylesheet" href="{% static 'bayer/css/card.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Add Bootstrap CSS link -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Add Font Awesome CSS link -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
 
 
 </head>
 
 <body>
+
+  <header class="bg-primary text-white text-center py-3">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top mb-5 " style="color: aliceblue; font-family: Trirong; font-size: 17px">
+        <a class="navbar-brand" style="color: aliceblue; " href="#">Ecom</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" style="color: aliceblue; " href="#">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: aliceblue; " href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"  style="color: aliceblue; " href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+        </div>
+      
+      <a href="/bayer/user-cart-detail/" style="color: white; text-decoration: none; font-family: Trirong">
+        <span style="position: relative;">
+            <i class="fas fa-cart-plus" style="font-size: 17px;"> Cart</i> <!-- Cart Icon -->
+            <span style="background-color: red; color: white; border-radius: 50%; padding: 5px 5px; font-size: 9px; position: absolute; top: -20px; right: 35px;">1</span> <!-- Update this number dynamically -->
+        </span>
+    </a>
+          <div class="nav-item dropdown" style="font-family: Trirong;">
+            <a class="nav-link dropdown-toggle" style="color: aliceblue; font-family: Trirong; font-size: 17px" role="button" data-toggle="dropdown" aria-expanded="false">
+
+            {% if user.is_authenticated %}
+              Welcome, {{ user.username }}
+            {% else %}
+              Welcome, Guest
+            {% endif %}
+
+            </a>
+            <div class="dropdown-menu" style="font-family: Trirong;">
+              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" href="#">Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/userlogout/">Logout</a>
+            </div>
+          </div>
+      </nav>
+
+</header>
+
 
 <div class="card-container">
 
@@ -54,9 +120,6 @@
   </button>
   </form>
   
-  
-
-
   </div>
 
   <div class="product-price">
@@ -123,14 +186,11 @@
  
 </div>
 
-
-
-
-
-
-
 <!-- Adding a JavaScript file -->
 <script src="{% static 'bayer/js/card.js' %}"></script>
+
+
+
 
 
 
@@ -307,9 +367,9 @@
 
 {% comment %} <script>{'static','\bayer\bayer.js\card.js'}</script> {% endcomment %}
 
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 
 
 

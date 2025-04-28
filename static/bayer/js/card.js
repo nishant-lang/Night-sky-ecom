@@ -1,49 +1,5 @@
 
 
-// document.addEventListener("DOMContentLoaded", function() {
-  
-//   const productPic = document.querySelector(".product-pic");
-//   const prevBtn = document.querySelector(".prev-btn");
-//   const nextBtn = document.querySelector(".next-btn");
-
-//   console.log(productPic)
-//   console.log(prevBtn)
-//   console.log(nextBtn)
-
-//   const scrollAmount = 550 // Adjust based on image width
-
-//   nextBtn.addEventListener("click", function() {
-//       productPic.scrollBy({ left: scrollAmount, behavior: "smooth" });
-//       console.log('next btn clicked')
-//   });
-
-//   prevBtn.addEventListener("click", function() {
-//       productPic.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-//       console.log('prev btn clicked')
-//   });
-// });
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   const productPic = document.querySelector(".product-pic");
-//   const prevBtn = document.querySelector(".prev-btn");
-//   const nextBtn = document.querySelector(".next-btn");
-
-//   function getImageWidth() {
-//       return productPic.querySelector("img").clientWidth; // Get exact image width
-//   }
-
-//   nextBtn.addEventListener("click", function() {
-//       productPic.scrollBy({ left: getImageWidth(), behavior: "smooth" });
-//   });
-
-//   prevBtn.addEventListener("click", function() {
-//       productPic.scrollBy({ left: -getImageWidth(), behavior: "smooth" });
-//   });
-// });
-
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -101,25 +57,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const paymentRadios = document.querySelectorAll("input[name='payment-method']");
-//     const paymentSections = {
-//         upi: document.querySelector(".upi-payment"),
-//         card: document.querySelector(".card-payment")
-//     };
-
-//     function updatePaymentView() {
-//         Object.values(paymentSections).forEach(section => section.style.display = "none");
-//         const selectedPayment = document.querySelector("input[name='payment-method']:checked").value;
-//         paymentSections[selectedPayment].style.display = "block";
-//     }
-
-//     paymentRadios.forEach(radio => radio.addEventListener("change", updatePaymentView));
-// });
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const paymentRadios = document.querySelectorAll("input[name='payment-method']");
     const paymentSections = {
@@ -141,80 +78,56 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const buyButton = document.getElementById("bye");
-//     console.log('buybtn clicked....')
-//     buyButton.addEventListener('click', function () {
-//         const productId = buyButton.getAttribute("data-product-id");
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.form-btn');
+
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();  // Stop normal form submission
+
+            const url = form.action;  // Get the form action URL
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({}),  // No data needed if backend just needs product_id from URL
+            })
+            .then(response => response.json().then(data => ({status: response.status, body: data})))
+            .then(({status, body}) => {
+                if (status === 200) {
+                    showToast(body.message, 'success');
+                } else {
+                    showToast(body.message || 'Failed to add to cart.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                showToast('Something went wrong. Try again!', 'error');
+            });
+        });
+    }
+
+    function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.right = '20px';
+        toast.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+        toast.style.color = '#fff';
+        toast.style.padding = '12px 20px';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.3)';
+        toast.style.zIndex = '1000';
+        document.body.appendChild(toast);
         
-//         if (productId) {
-//             window.location.href = `/payment/create-checkout-session/${productId}`;
-//         } else {
-//             console.error("Product ID not found!");
-//         }
-//     });
-// });
-
-
-
-
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     // Get references to the previous and next buttons
-//     var prevButton = document.querySelector('.carousel-control-prev');
-//     var nextButton = document.querySelector('.carousel-control-next');
-    
-//     // Get a reference to the carousel element
-//     var carousel = document.getElementById('productCarousel');
-
-//     // Add click event listener for the "Previous" button
-//     prevButton.addEventListener('click', function() {
-//         var carouselInstance = new bootstrap.Carousel(carousel);
-//         carouselInstance.prev();
-//     });
-
-//     // Add click event listener for the "Next" button
-//     nextButton.addEventListener('click', function() {
-//         var carouselInstance = new bootstrap.Carousel(carousel);
-//         carouselInstance.next();
-//     });
-// });
-
-
-
-// // Get a reference to the "Add to Cart" button
-
-// const addToCartButton = document.querySelector('.addToCartBtn');
-
-// // Add a click event listener to the button
-// addToCartButton.addEventListener('click', function() {
-// // Get the product ID from the data attribute
-// const productId = this.getAttribute('data-product-id');
-// const csrftoken='{{csrftoken}}'
-// console.log('Product ID:', productId);
-
-// fetch(`http://127.0.0.1:8000/bayer/add-to-cart/${productId}/`,{
-
-//   method:"POST",
-//   headers:{'X-CSRFToken':csrftoken,},
-//   //body:formData,
-//   credential:'same-origin',
- 
-// }).then(response => {
-//   console.log(response.status)
-//   return response.json()
-  
-  
-//   //return get_blog_post()
-// }).then((data)=>{
-//   console.log(data)
-//   if (data.hasOwnProperty('message')){
-
-//   }
-// })
-
-// });
-
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+});
